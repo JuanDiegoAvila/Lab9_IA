@@ -18,15 +18,17 @@ Q = np.zeros([env.observation_space.n, env.action_space.n])
 alpha = 0.8
 gamma = 0.95
 episodios = 30
+max_steps = 20
 
 for i in range(episodios):
     estado = env.reset()
     estado = estado[0]
 
     done = False
+    t = 0
 
-    while not done:
-        
+    while not done and t < max_steps :
+
         estado_array = np.array([estado], dtype=np.int16)
 
         # Seleccionar una acción a partir del estado actual utilizando la política epsilon-greedy
@@ -43,6 +45,7 @@ for i in range(episodios):
         Q[estado_array.item(), a] = Q[estado_array.item(), a] + alpha * (recompensa + gamma * np.max(Q[estado_array2.item(), :]) - Q[estado_array.item(), a])
 
         estado = estado2
+        t += 1
 
 print(Q)
 
