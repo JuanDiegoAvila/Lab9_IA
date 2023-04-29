@@ -3,7 +3,7 @@ import numpy as np
 import tensorflow as tf
 
 # Crear el entorno del Boxeo
-env = gym.make("ALE/Boxing-ram-v5")
+env = gym.make("ALE/Boxing-ram-v5", difficulty=2)
 
 # Crear una red neuronal con una capa oculta de 64 neuronas
 model = tf.keras.Sequential([
@@ -15,12 +15,12 @@ model = tf.keras.Sequential([
 model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=0.001), loss='mse')
 
 # Entrenar el modelo
-episodes = 5
-steps = 20
+episodes = 20
+steps = 200
 epsilon = 1.0
 epsilon_min = 0.01
 epsilon_decay = 0.999
-gamma = 0.99
+gamma = 0.89
 
 for episode in range(episodes):
     state = env.reset()
